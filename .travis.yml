@@ -8,11 +8,24 @@ os: osx
 osx_image: xcode8
 env:
   - scheme='Siesta macOS' platform='OS X'
-  - scheme='Siesta iOS' platform='iOS Simulator,OS=10.0,name=iPhone SE'
-  - scheme='Siesta iOS' platform='iOS Simulator,OS=9.3,name=iPhone 6'
-  - scheme='Siesta iOS' platform='iOS Simulator,OS=9.0,name=iPhone 4s'
+  - scheme='Siesta iOS' platform='iOS Simulator,OS=10.0,name=iPhone SE' simdevice='1A6EAD45-0A28-421A-A6D4-AD0866464FAA'
+  - scheme='Siesta iOS' platform='iOS Simulator,OS=9.3,name=iPhone 6'   simdevice='79A9445F-18A8-4DD1-A9BB-D2FACE658A81'
+  - scheme='Siesta iOS' platform='iOS Simulator,OS=9.0,name=iPhone 4s'  simdevice='84F3616D-0AB5-41EE-A499-89211620898F'
 
 script: |
+
+  date
+
+  # ------ Simulator ------
+
+  if ! [ -z ${simdevice+x} ]; then
+    echo "Starting iOS simulator..."
+    /Applications/Xcode.app/Contents/Developer/Applications/Simulator.app/Contents/MacOS/Simulator \
+      -CurrentDeviceUDID "$simdevice" &
+    echo "Giving simulator a head start, so tests don't time out"
+    sleep 30
+  fi
+
   # ------ Certificates ------
 
   # Thanks to https://github.com/Carthage/Carthage/blob/12fb7881876b4987584e49d00befcd2a8b6b354d/script/cibuild#L29-L51
