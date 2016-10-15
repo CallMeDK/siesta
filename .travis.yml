@@ -1,6 +1,7 @@
 branches:
   only:
   - master
+  - travis-experiments
 
 language: objective-c
 os: osx
@@ -73,6 +74,13 @@ script: |
   buildresult=${PIPESTATUS[0]}
 
   echo —————— Completed tests for $platform.
+
+  echo "Dumping logs:"
+  ls /Users/travis/Library/Developer/Xcode/DerivedData/Siesta-*/Logs/Test/*/Session-SiestaTests-*.log
+  echo
+  cat /Users/travis/Library/Developer/Xcode/DerivedData/Siesta-*/Logs/Test/*/Session-SiestaTests-*.log
+  echo
+  echo
 
   sleep 5  # Workaround for Travis log truncation
 
