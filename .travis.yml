@@ -20,6 +20,7 @@ script: |
 
   if ! [ -z ${simdevice+x} ]; then
     tail -f /var/log/system.log &
+    tail -f ~/Library/Logs/CoreSimulator/"$simdevice"/system.log
     echo "Starting iOS simulator..."
     /Applications/Xcode.app/Contents/Developer/Applications/Simulator.app/Contents/MacOS/Simulator \
       -CurrentDeviceUDID "$simdevice" &
